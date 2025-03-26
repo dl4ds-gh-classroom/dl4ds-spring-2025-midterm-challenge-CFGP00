@@ -153,7 +153,7 @@ def main():
         "model": "MyModel",   # Change name when using a different model
         "batch_size": 64, # run batch size finder to find optimal batch size
         "learning_rate": 0.001,
-        "epochs": 5,  # Train for longer in a real scenario, seems validation plateus around here (30)
+        "epochs": 30,  # Train for longer in a real scenario, seems validation plateus around here (30)
         "num_workers": 8, # Adjust based on your system
         "device": "mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu",
         "data_dir": "./data",  # Make sure this directory exists
@@ -288,11 +288,11 @@ def main():
     print(f"Clean CIFAR-100 Test Accuracy: {clean_accuracy:.2f}%")
 
     # --- Evaluation on OOD ---
-    #all_predictions = eval_ood.evaluate_ood_test(model, CONFIG)
+    all_predictions = eval_ood.evaluate_ood_test(model, CONFIG)
 
     # --- Create Submission File (OOD) ---
-    #submission_df_ood = eval_ood.create_ood_df(all_predictions)
-    #submission_df_ood.to_csv("submission_ood.csv", index=False)
+    submission_df_ood = eval_ood.create_ood_df(all_predictions)
+    submission_df_ood.to_csv("submission_ood.csv", index=False)
     print("submission_ood.csv created successfully.")
     print(f"Clean CIFAR-100 Test Accuracy: {clean_accuracy:.2f}%")
 if __name__ == '__main__':
